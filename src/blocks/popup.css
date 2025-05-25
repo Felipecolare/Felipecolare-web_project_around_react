@@ -1,0 +1,226 @@
+.popup__container,
+.popup__bigImage-container {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: none;
+}
+
+/* Cartão de popup - contém o conteúdo do popup */
+.popup__card {
+  background: #FFFFFF;
+  max-width: 430px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: 1s drop;
+}
+
+/* Animação de entrada do popup */
+@keyframes drop {
+  0% {
+    top: -100px;
+  }
+  100% {
+    top: 50%;
+  }
+}
+
+/* Botão de fechar - estilo compartilhado */
+.popup__close,
+.popup__buttonClose-bigImage {
+  background: url(../images/close-icon.png) center/contain no-repeat;
+  width: 40px;
+  height: 40px;
+  border: none;
+  position: absolute;
+  right: -48px;
+  top: -48px;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.popup__close:hover,
+.popup__buttonClose-bigImage:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+/* Botão de fechar alternativo */
+.popup__button-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup__button-close:hover {
+  cursor: pointer;
+}
+
+/* Título do popup */
+.popup__title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29.05px;
+  text-align: left;
+  margin: 34px 64px 54px 36px;
+  color: #000000;
+}
+
+/* Formulários dentro do popup */
+.popup__input {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container para input e mensagem de erro */
+.input__wrap {
+  margin-bottom: 30px;
+}
+
+/* Campo de texto do formulário */
+.input__text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid #000000;
+  margin: 0 36px;
+  max-width: 358px;
+  width: 80%;
+}
+
+.input__text:focus {
+  outline: none;
+}
+
+.input__text_type_error {
+  border-bottom: 1px solid #FF0000;
+}
+
+/* Botão de envio do formulário */
+.input__submit {
+  max-width: 358px;
+  margin: 18px 36px 36px;
+  border-radius: 2px;
+  background: #000000;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.78px;
+  text-align: center;
+  color: #FFFFFF;
+  padding-top: 14px;
+  padding-bottom: 18px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.input__submit:hover {
+  opacity: 80%;
+}
+
+/* Estado desabilitado do botão */
+.input__submit:disabled,
+.input__submit[disabled],
+.formButton_disabled {
+  background-color: transparent;
+  color: #000000;
+  opacity: 20%;
+  cursor: default;
+}
+
+/* Mensagens de erro dos campos */
+.input__errorMessage {
+  display: block;
+  font-size: 12px;
+  color: #FF0000;
+  margin: 5px 36px 0;
+  max-width: 358px;
+  width: 80%;
+}
+
+/* Container específico para popup de imagem grande */
+.popup__bigImage-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.popup__bigImage-cardContainer {
+  position: relative;
+  max-width: 75vw;
+  max-height: 75vh;
+  width: auto;
+}
+
+/* Imagem dentro do popup grande */
+.popup__bigImage-card img,
+.popup__open-bigImage {
+  max-width: 75vw;
+  max-height: 75vh;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Legenda da imagem grande */
+.popup__subtitle-bigImage {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #FFFFFF;
+  text-align: left;
+  margin-top: 10px;
+}
+
+/* Media queries para responsividade */
+@media screen and (max-width: 1024px) {
+  .popup__bigImage-cardContainer {
+    max-width: 432px;
+    max-height: 299px;
+  }
+  
+  .popup__open-bigImage {
+    max-width: 432px;
+    max-height: 299px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  /* Ajustes para botões de fechar em telas pequenas */
+  .popup__close,
+  .popup__buttonClose-bigImage,
+  .popup__button-close {
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Ajustes para o cartão de popup em telas pequenas */
+  .popup__card {
+    max-width: 300px;
+  }
+  
+  /* Ajustes para imagem grande em telas pequenas */
+  .popup__open-bigImage {
+    max-width: 240px;
+  }
+  
+  .popup__subtitle-bigImage {
+    max-width: 240px;
+  }
+}
