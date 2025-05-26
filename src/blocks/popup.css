@@ -1,226 +1,157 @@
-.popup__container,
-.popup__bigImage-container {
-  background: rgba(0, 0, 0, 0.5);
+/* Popup */
+.popup {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
   width: 100%;
-  display: none;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* visibility: hidden; */
+  /* opacity: 0; */
+  transition: visibility 0.3s, opacity 0.3s linear;
+  z-index: 10;
 }
 
-/* Cartão de popup - contém o conteúdo do popup */
-.popup__card {
-  background: #FFFFFF;
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup__content {
+  position: relative;
   max-width: 430px;
   width: 100%;
+  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  padding: 34px 36px 36px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+}
+
+.popup__close {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: 1s drop;
-}
-
-/* Animação de entrada do popup */
-@keyframes drop {
-  0% {
-    top: -100px;
-  }
-  100% {
-    top: 50%;
-  }
-}
-
-/* Botão de fechar - estilo compartilhado */
-.popup__close,
-.popup__buttonClose-bigImage {
-  background: url(../images/close-icon.png) center/contain no-repeat;
-  width: 40px;
-  height: 40px;
+  top: -40px;
+  right: -40px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
   border: none;
-  position: absolute;
-  right: -48px;
-  top: -48px;
   cursor: pointer;
-  z-index: 4;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28.9782 28.9782L3.02185 3.02185M3.02185 28.9782L28.9782 3.02185' stroke='white' stroke-width='3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: opacity 0.2s ease;
 }
 
-.popup__close:hover,
-.popup__buttonClose-bigImage:hover {
+.popup__close:hover {
   opacity: 0.6;
-  cursor: pointer;
 }
 
-/* Botão de fechar alternativo */
-.popup__button-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.popup__button-close:hover {
-  cursor: pointer;
-}
-
-/* Título do popup */
 .popup__title {
   font-size: 24px;
   font-weight: 900;
-  line-height: 29.05px;
-  text-align: left;
-  margin: 34px 64px 54px 36px;
-  color: #000000;
+  line-height: 1.2;
+  color: #000;
+  margin: 0 0 54px;
 }
 
-/* Formulários dentro do popup */
-.popup__input {
+.popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.popup__field {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* Container para input e mensagem de erro */
-.input__wrap {
-  margin-bottom: 30px;
-}
-
-/* Campo de texto do formulário */
-.input__text {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.94px;
-  text-align: left;
+.popup__input {
+  width: 100%;
+  height: 27px;
   border: none;
-  border-bottom: 1px solid #000000;
-  margin: 0 36px;
-  max-width: 358px;
-  width: 80%;
-}
-
-.input__text:focus {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0 0 13px;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #000;
   outline: none;
 }
 
-.input__text_type_error {
-  border-bottom: 1px solid #FF0000;
+.popup__input:focus {
+  border-bottom-color: #000;
 }
 
-/* Botão de envio do formulário */
-.input__submit {
-  max-width: 358px;
-  margin: 18px 36px 36px;
+.popup__input_type_error {
+  border-bottom-color: #ff0000;
+}
+
+.popup__error {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #ff0000;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.popup__error_visible {
+  opacity: 1;
+}
+
+.popup__button {
+  margin-top: 18px;
+  min-height: 50px;
+  background-color: #000;
+  color: #fff;
+  border: none;
   border-radius: 2px;
-  background: #000000;
   font-size: 18px;
-  font-weight: 400;
-  line-height: 21.78px;
-  text-align: center;
-  color: #FFFFFF;
-  padding-top: 14px;
-  padding-bottom: 18px;
-  width: 100%;
+  line-height: 1.22;
   cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-.input__submit:hover {
-  opacity: 80%;
+.popup__button:hover {
+  opacity: 0.8;
 }
 
-/* Estado desabilitado do botão */
-.input__submit:disabled,
-.input__submit[disabled],
-.formButton_disabled {
-  background-color: transparent;
-  color: #000000;
-  opacity: 20%;
-  cursor: default;
+.popup__button_disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
 }
 
-/* Mensagens de erro dos campos */
-.input__errorMessage {
-  display: block;
-  font-size: 12px;
-  color: #FF0000;
-  margin: 5px 36px 0;
-  max-width: 358px;
-  width: 80%;
+.popup__button_disabled:hover {
+  opacity: 0.2;
 }
 
-/* Container específico para popup de imagem grande */
-.popup__bigImage-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.popup__bigImage-cardContainer {
-  position: relative;
-  max-width: 75vw;
-  max-height: 75vh;
-  width: auto;
-}
-
-/* Imagem dentro do popup grande */
-.popup__bigImage-card img,
-.popup__open-bigImage {
-  max-width: 75vw;
-  max-height: 75vh;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Legenda da imagem grande */
-.popup__subtitle-bigImage {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 14.52px;
-  color: #FFFFFF;
-  text-align: left;
-  margin-top: 10px;
-}
-
-/* Media queries para responsividade */
-@media screen and (max-width: 1024px) {
-  .popup__bigImage-cardContainer {
-    max-width: 432px;
-    max-height: 299px;
+/* Responsive */
+@media screen and (max-width: 580px) {
+  .popup__content {
+    max-width: 282px;
+    padding: 25px 22px;
   }
   
-  .popup__open-bigImage {
-    max-width: 432px;
-    max-height: 299px;
-  }
-}
-
-@media screen and (max-width: 720px) {
-  /* Ajustes para botões de fechar em telas pequenas */
-  .popup__close,
-  .popup__buttonClose-bigImage,
-  .popup__button-close {
-    right: 15px;
-    top: 15px;
-    width: 30px;
-    height: 30px;
-  }
-
-  /* Ajustes para o cartão de popup em telas pequenas */
-  .popup__card {
-    max-width: 300px;
+  .popup__close {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0;
   }
   
-  /* Ajustes para imagem grande em telas pequenas */
-  .popup__open-bigImage {
-    max-width: 240px;
+  .popup__title {
+    font-size: 18px;
+    margin-bottom: 75px;
   }
   
-  .popup__subtitle-bigImage {
-    max-width: 240px;
+  .popup__button {
+    font-size: 14px;
+    min-height: 46px;
   }
 }

@@ -1,17 +1,3 @@
-/* Normalize */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap');
-
-.nav {
-    border-bottom: 1px solid rgba(84, 84, 84, 1);
-    margin-bottom: 40px;
-  }
 
 /* Page */
 body {
@@ -34,6 +20,11 @@ body {
 }
 
 /* Navigation */
+.nav {
+    border-bottom: 1px solid rgba(84, 84, 84, 1);
+    margin-bottom: 40px;
+  }
+  
 .nav {
   border-bottom: 1px solid rgba(84, 84, 84, 1);
   padding: 45px 0 40px;
