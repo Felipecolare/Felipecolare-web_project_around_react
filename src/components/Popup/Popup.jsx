@@ -1,17 +1,23 @@
 export default function Popup(props) {
-  //children é o conteúdo de popup
-  const { title, children, onClose } = props;
+  // children é o conteúdo de popup
+  const { onClose, title, children } = props;
 
   return (
     <div className="popup">
-      <div className="popup__content">
+      <div
+        className={`popup__content ${
+          !title ? "popup__content_content_image" : ""
+        }`}
+      >
         <button
           aria-label="Close modal"
           className="popup__close"
           type="button"
           onClick={onClose}
         />
-        <h3 className="popup__title">{title}</h3>
+        
+        {title && <h3 className="popup__title">{title}</h3>}
+
         {children}
       </div>
     </div>

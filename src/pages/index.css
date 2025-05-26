@@ -1,14 +1,14 @@
 /* ATENÇÃO: Todos os @import devem vir PRIMEIRO, antes de qualquer regra CSS */
 
-/* Imports dos arquivos CSS externos */
-@import url('./vendor/normalize.css');
-@import url('./vendor/fonts.css');
+/* Imports dos arquivos CSS (ajustados para os arquivos reais) */
+@import url('./fonts.css');
 
-/* Imports dos blocos de componentes */
-@import url('./blocks/page.css');
-@import url('./blocks/nav.css');
-@import url('./blocks/profile.css');
-@import url('./blocks/popup.css');
-@import url('./blocks/popup-confirm.css');
-@import url('./blocks/grid.css');
-@import url('./blocks/footer.css');
+/* Imports dos blocos de componentes (baseados nos arquivos fornecidos) */
+@import url('./page.css');
+@import url('./nav.css');
+@import url('./profile.css');
+@import url('./popup.css');
+@import url('./grid.css');
+@import url('./cards.css');
+@import url('./footer.css');
+@import url('./responsive.css');

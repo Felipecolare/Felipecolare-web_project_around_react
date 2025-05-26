@@ -1,105 +1,87 @@
+// ===== src/components/Main/Main.jsx =====
+import { useState } from "react";
 import Popup from "../Popup/Popup.jsx";
-import NewCard from "../Popup/NewCard.jsx";
+import ImagePopup from "../Popup/ImagePopup.jsx";
 import EditProfile from "../Popup/EditProfile.jsx";
 import EditAvatar from "../Popup/EditAvatar.jsx";
+import NewCard from "../Popup/NewCard.jsx";
+import Card from "../Card/Card.jsx"; // Adicione esta linha
 
-export default function Main({ popup, closeAllPopups }) {
+// Dados fictícios (mock data)
+const cards = [
+  {
+    isLiked: false,
+    _id: '5d1f0611d321eb4bdcd707dd',
+    name: 'Yosemite Valley',
+    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg',
+    owner: '5d1f0611d321eb4bdcd707dd',
+    createdAt: '2019-07-05T08:10:57.741Z',
+  },
+  {
+    isLiked: false,
+    _id: '5d1f064ed321eb4bdcd707de',
+    name: 'Lake Louise',
+    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg',
+    owner: '5d1f0611d321eb4bdcd707dd',
+    createdAt: '2019-07-05T08:11:58.324Z',
+  },
+];
+
+export default function Main() {
+  const [popup, setPopup] = useState(null);
+
+  // Objetos de popup
+  const newCardPopup = { title: "New card", children: <NewCard /> };
+  const editProfilePopup = { title: "Edit profile", children: <EditProfile /> };
+  const editAvatarPopup = { title: "Change profile picture", children: <EditAvatar /> };
+  
+  // Função para abrir popup
+  function handleOpenPopup(popup) {
+    setPopup(popup);
+  }
+  
+  // Função para fechar popup
+  function handleClosePopup() {
+    setPopup(null);
+  }
+
   return (
-    <main className="grid__content page__container">
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg" 
-          alt="Vale de Yosemite" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Vale de Yosemite</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
+    <main className="page__container">
+      <section className="profile">
+        <div className="profile__card-image">
+          <img
+            src="src/images/jacques_cousteau.png"
+            alt="Jacques Cousteau"
+            className="profile__image"
+          />
         </div>
-      </div>
-
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg" 
-          alt="Lago Louise" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Lago Louise</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
+        <div className="profile__card">
+          <h2 className="profile__title">Jacques Cousteau</h2>
+          <button 
+            type="button" 
+            className="profile__button-edit"
+            onClick={() => handleOpenPopup(editProfilePopup)}
+          ></button>
+          <p className="profile__subtitle">Explorador</p>
         </div>
-      </div>
 
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg" 
-          alt="Lago di Braies" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Lago di Braies</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
-        </div>
-      </div>
+        <button 
+          type="button" 
+          className="profile__button-add"
+          onClick={() => handleOpenPopup(newCardPopup)}
+        ></button>
+      </section>
 
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg" 
-          alt="Latemar" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Latemar</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
-        </div>
-      </div>
+      <ul className="cards__list">
+        {cards.map((card) => (
+          <Card key={card._id} card={card} />
+        ))}
+      </ul>
 
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg" 
-          alt="Parque Nacional" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Parque Nacional</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
-        </div>
-      </div>
-
-      <div className="grid__card">
-        <button type="button" className="grid__card-delete"></button>
-        <img 
-          src="https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg" 
-          alt="Montanhas Care" 
-          className="grid__card-image" 
-        />
-        <div className="grid__card-text">
-          <h3 className="grid__card-title">Montanhas Care</h3>
-          <button className="grid__button-heart button-heart-unliked"></button>
-        </div>
-      </div>
-
-      {/* Renderização condicional dos popups */}
-      {popup === 'new-card' && (
-        <Popup title="Novo local" onClose={closeAllPopups}>
-          <NewCard />
-        </Popup>
-      )}
-      
-      {popup === 'edit-profile' && (
-        <Popup title="Editar perfil" onClose={closeAllPopups}>
-          <EditProfile />
-        </Popup>
-      )}
-      
-      {popup === 'edit-avatar' && (
-        <Popup title="Alterar foto do perfil" onClose={closeAllPopups}>
-          <EditAvatar />
+      {/* Renderização condicional do popup */}
+      {popup && (
+        <Popup onClose={handleClosePopup} title={popup.title}>
+          {popup.children}
         </Popup>
       )}
     </main>
