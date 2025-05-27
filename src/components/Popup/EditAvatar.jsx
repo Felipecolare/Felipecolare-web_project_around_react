@@ -4,7 +4,6 @@ export default function EditAvatar() {
       className="popup__form"
       name="avatar-form"
       id="edit-avatar-form"
-      noValidate
     >
       <label className="popup__field">
         <input
