@@ -4,7 +4,6 @@ export default function NewCard() {
       className="popup__form"
       name="card-form"
       id="new-card-form"
-      noValidate
     >
       <label className="popup__field">
         <input

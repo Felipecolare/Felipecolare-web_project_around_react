@@ -4,7 +4,6 @@ export default function EditProfile() {
       className="popup__form"
       name="profile-form"
       id="edit-profile-form"
-      noValidate
     >
       <label className="popup__field">
         <input
