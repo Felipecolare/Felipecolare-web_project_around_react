@@ -1,11 +1,6 @@
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap');
 
-body {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
 /* Page */ 
 body { 
   background-color: #000; 
@@ -30,11 +25,8 @@ body {
 .nav { 
     border-bottom: 1px solid rgba(84, 84, 84, 1);
     margin-bottom: 40px; 
-  } 
-.nav { 
-  border-bottom: 1px solid rgba(84, 84, 84, 1); 
-  padding: 45px 0 40px; 
-} 
+    padding: 45px 0 40px;
+  }  
 
 .nav__logo { 
   display: flex; 
