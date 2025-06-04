@@ -526,3 +526,99 @@ body {
     min-height: 46px; 
   } 
 }
+
+/* ========================================
+   ESTILOS ADICIONAIS PARA INTEGRAÇÃO DA API
+   ======================================== */
+
+/* Container para like button e contador */
+.card__like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Contador de likes */
+.card__like-count {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: #000000;
+  margin: 0;
+  text-align: center;
+  min-width: 22px;
+}
+
+/* Melhorias no avatar - cursor pointer */
+.profile__image {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.profile__image:hover {
+  opacity: 0.8;
+}
+
+/* Melhorias na imagem do cartão */
+.card__image {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.card__image:hover {
+  opacity: 0.9;
+}
+
+/* Estilos para o popup de imagem */
+.popup_type_image {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.popup__content_content_image {
+  background: transparent;
+  box-shadow: none;
+  max-width: 75vw;
+  max-height: 75vh;
+  padding: 0;
+  border-radius: 0;
+}
+
+.popup__image {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  display: block;
+}
+
+.popup__caption {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+/* Responsividade adicional para dispositivos móveis */
+@media screen and (max-width: 720px) {
+  .popup__content_content_image {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+  
+  .popup__image {
+    max-height: 90vh;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .popup__content_content_image {
+    max-width: 95vw;
+  }
+  
+  .card__like-count {
+    font-size: 12px;
+  }
+}
