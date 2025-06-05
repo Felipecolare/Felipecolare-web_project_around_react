@@ -4,11 +4,11 @@
 @import url('./fonts.css');
 
 /* Imports dos blocos de componentes (baseados nos arquivos fornecidos) */
-@import url('./page.css');
-@import url('./nav.css');
-@import url('./profile.css');
-@import url('./popup.css');
-@import url('./grid.css');
-@import url('./cards.css');
-@import url('./footer.css');
-@import url('./responsive.css');
+@import url('./styles/fonts.css');
+@import url('./styles/page.css');
+@import url('./styles/nav.css');
+@import url('./styles/profile.css');
+@import url('./styles/cards.css');
+@import url('./styles/popup.css');
+@import url('./styles/footer.css');
+@import url('./styles/responsive.css');
