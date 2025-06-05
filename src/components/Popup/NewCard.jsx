@@ -1,3 +1,4 @@
+// ===== src/components/Popup/NewCard.jsx =====
 import { useState } from 'react';
 
 export default function NewCard({ onAddPlaceSubmit, isLoading }) {

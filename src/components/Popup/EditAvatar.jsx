@@ -1,3 +1,4 @@
+// ===== src/components/Popup/EditAvatar.jsx =====
 import { useRef, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 

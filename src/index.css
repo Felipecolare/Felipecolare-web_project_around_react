@@ -59,7 +59,8 @@ body {
   height: 120px; 
   border-radius: 50%; 
   overflow: hidden; 
-  flex-shrink: 0; 
+  flex-shrink: 0;
+  position: relative;
 } 
 
 .profile__image { 
@@ -67,8 +68,63 @@ body {
   height: 100%; 
   object-fit: cover; 
   border-radius: 50%; 
-  display: block; 
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 } 
+
+.profile__image:hover {
+  opacity: 0.8;
+}
+
+/* Tooltip para o avatar */
+.profile__card-image::after {
+  content: "Alterar a foto do perfil";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.profile__card-image:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Triângulo do tooltip */
+.profile__card-image::before {
+  content: "";
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.profile__card-image:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
 
 .profile__card { 
   display: grid; 
@@ -163,7 +219,7 @@ body {
   opacity: 0.6; 
 }
 
-/* Cards */ 
+/* Cards - Ajuste para centralizar melhor */ 
 .cards__list { 
   display: grid; 
   grid-template-columns: repeat(3, 1fr); 
@@ -171,7 +227,9 @@ body {
   margin-bottom: 67px; 
   list-style: none; 
   padding: 0; 
-  margin: 0 0 67px 0; 
+  margin: 0 0 67px 0;
+  justify-items: center;
+  max-width: 100%;
 } 
 
 .card { 
@@ -188,8 +246,13 @@ body {
   height: 282px; 
   object-fit: cover; 
   cursor: pointer; 
-  display: block; 
+  display: block;
+  transition: opacity 0.2s ease;
 } 
+
+.card__image:hover {
+  opacity: 0.9;
+}
 
 .card__delete-button { 
   position: absolute; 
@@ -274,6 +337,25 @@ body {
   opacity: 0.5; 
 }
 
+/* Container para like button e contador */
+.card__like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Contador de likes */
+.card__like-count {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: #000000;
+  margin: 0;
+  text-align: center;
+  min-width: 22px;
+}
+
 /* Popup */ 
 .popup { 
   position: fixed; 
@@ -297,11 +379,11 @@ body {
 .popup__content { 
   position: relative; 
   max-width: 430px; 
-  width: 100%; 
   background-color: #fff; 
   border-radius: 10px; 
   padding: 34px 36px 36px; 
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15); 
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  min-width: 358px;
 } 
 
 .popup__close { 
@@ -329,7 +411,8 @@ body {
   font-weight: 900; 
   line-height: 1.2; 
   color: #000; 
-  margin: 0 0 54px; 
+  margin: 0 0 48px;
+  text-align: left;
 } 
 
 .popup__form { 
@@ -353,7 +436,8 @@ body {
   font-size: 14px; 
   line-height: 1.21; 
   color: #000; 
-  outline: none; 
+  outline: none;
+  background: transparent;
 } 
 
 .popup__input:focus { 
@@ -389,7 +473,8 @@ body {
   font-size: 18px; 
   line-height: 1.22; 
   cursor: pointer; 
-  transition: opacity 0.2s ease; 
+  transition: opacity 0.2s ease;
+  width: 100%;
 } 
 
 .popup__button:hover { 
@@ -403,6 +488,65 @@ body {
 
 .popup__button_disabled:hover { 
   opacity: 0.2; 
+}
+
+/* Estilos para o popup de imagem */
+.popup_type_image {
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__content_content_image {
+  background: transparent;
+  box-shadow: none;
+  max-width: 75vw;
+  max-height: 75vh;
+  padding: 0;
+  border-radius: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup__image {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.popup__caption {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 10px 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Posicionamento específico do botão X para popup de imagem */
+.popup_type_image .popup__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28.9782 28.9782L3.02185 3.02185M3.02185 28.9782L28.9782 3.02185' stroke='white' stroke-width='3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: opacity 0.2s ease;
+  z-index: 1001;
 }
 
 /* Footer */ 
@@ -500,13 +644,32 @@ body {
   .footer__copyright { 
     font-size: 14px; 
     line-height: 1.21; 
-  } 
+  }
+
+  /* Tooltip responsivo */
+  .profile__card-image::after {
+    bottom: -35px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .profile__card-image::before {
+    bottom: -27px;
+  }
+
+  /* Popup para tablet */
+  .popup__content {
+    max-width: 358px;
+    width: 85%;
+  }
 } 
 
 @media screen and (max-width: 580px) { 
   .popup__content { 
     max-width: 282px; 
-    padding: 25px 22px; 
+    width: 90%;
+    padding: 25px 22px;
+    min-width: 250px;
   } 
    
   .popup__close { 
@@ -518,107 +681,31 @@ body {
    
   .popup__title { 
     font-size: 18px; 
-    margin-bottom: 75px; 
+    margin-bottom: 45px;
   } 
    
   .popup__button { 
     font-size: 14px; 
     min-height: 46px; 
-  } 
-}
-
-/* ========================================
-   ESTILOS ADICIONAIS PARA INTEGRAÇÃO DA API
-   ======================================== */
-
-/* Container para like button e contador */
-.card__like-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-}
-
-/* Contador de likes */
-.card__like-count {
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.15;
-  color: #000000;
-  margin: 0;
-  text-align: center;
-  min-width: 22px;
-}
-
-/* Melhorias no avatar - cursor pointer */
-.profile__image {
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.profile__image:hover {
-  opacity: 0.8;
-}
-
-/* Melhorias na imagem do cartão */
-.card__image {
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.card__image:hover {
-  opacity: 0.9;
-}
-
-/* Estilos para o popup de imagem */
-.popup_type_image {
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-.popup__content_content_image {
-  background: transparent;
-  box-shadow: none;
-  max-width: 75vw;
-  max-height: 75vh;
-  padding: 0;
-  border-radius: 0;
-}
-
-.popup__image {
-  max-width: 100%;
-  max-height: 75vh;
-  object-fit: contain;
-  display: block;
-}
-
-.popup__caption {
-  background-color: transparent;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.25;
-  margin: 10px 0 0;
-  padding: 0;
-}
-
-/* Responsividade adicional para dispositivos móveis */
-@media screen and (max-width: 720px) {
-  .popup__content_content_image {
-    max-width: 90vw;
-    max-height: 90vh;
   }
-  
-  .popup__image {
-    max-height: 90vh;
-  }
-}
 
-@media screen and (max-width: 580px) {
   .popup__content_content_image {
     max-width: 95vw;
   }
   
   .card__like-count {
     font-size: 12px;
+  }
+
+  /* Ajuste específico do botão X para popup de imagem em mobile */
+  .popup_type_image .popup__close {
+    top: -30px;
+    right: 0;
+    width: 25px;
+    height: 25px;
+  }
+
+  .popup__form {
+    gap: 25px;
   }
 }

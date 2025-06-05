@@ -1,3 +1,4 @@
+// ===== src/components/Header/Header.jsx =====
 export default function Header() {
   return (
     <header className="header page__container">

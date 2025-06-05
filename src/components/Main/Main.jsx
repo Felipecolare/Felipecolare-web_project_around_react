@@ -42,21 +42,21 @@ export default function Main({
       <section className="profile">
         <div className="profile__card-image">
           <img
-            src={currentUser.avatar || "src/images/jacques_cousteau.png"}
+            src={currentUser.avatar || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
             alt={currentUser.name || "Usuário"}
             className="profile__image"
             onClick={() => onOpenPopup(editAvatarPopup)}
-            style={{ cursor: 'pointer' }}
+            title="Alterar a foto do perfil"
           />
         </div>
         <div className="profile__card">
-          <h2 className="profile__title">{currentUser.name || "Carregando..."}</h2>
+          <h2 className="profile__title">{currentUser.name || "Jacques Cousteau"}</h2>
           <button 
             type="button" 
             className="profile__button-edit"
             onClick={() => onOpenPopup(editProfilePopup)}
           ></button>
-          <p className="profile__subtitle">{currentUser.about || "Carregando..."}</p>
+          <p className="profile__subtitle">{currentUser.about || "Explorador"}</p>
         </div>
 
         <button 

@@ -1,3 +1,4 @@
+// ===== src/components/Popup/EditProfile.jsx =====
 import { useState, useContext, useEffect } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 

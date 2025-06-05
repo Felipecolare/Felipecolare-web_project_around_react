@@ -1,3 +1,4 @@
+// ===== src/components/Popup/ImagePopup.jsx =====
 export default function ImagePopup({ card, onClose }) {
   return (
     <div className="popup popup_type_image">
