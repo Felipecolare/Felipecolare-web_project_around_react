@@ -1,5 +1,5 @@
+/* ===== src/styles/profile.css ===== */
 /* Profile */ 
-
 .profile { 
   margin-bottom: 50px; 
   display: flex; 
@@ -12,7 +12,8 @@
   height: 120px; 
   border-radius: 50%; 
   overflow: hidden; 
-  flex-shrink: 0; 
+  flex-shrink: 0;
+  position: relative;
 } 
 
 .profile__image { 
@@ -20,8 +21,63 @@
   height: 100%; 
   object-fit: cover; 
   border-radius: 50%; 
-  display: block; 
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 } 
+
+.profile__image:hover {
+  opacity: 0.8;
+}
+
+/* Tooltip para o avatar */
+.profile__card-image::after {
+  content: "Alterar a foto do perfil";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.profile__card-image:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Triângulo do tooltip */
+.profile__card-image::before {
+  content: "";
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.profile__card-image:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
 
 .profile__card { 
   display: grid; 

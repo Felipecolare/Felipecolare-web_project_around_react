@@ -3,9 +3,13 @@
 /* Imports dos arquivos CSS (ajustados para os arquivos reais) */
 @import url('./fonts.css');
 
-/* Imports dos blocos de componentes (baseados nos arquivos fornecidos) */
+/* ===== src/index.css ===== */
+/* ATENÇÃO: Todos os @import devem vir PRIMEIRO, antes de qualquer regra CSS */
+
+/* Imports dos arquivos CSS modulares */
 @import url('./styles/fonts.css');
 @import url('./styles/page.css');
+@import url('./styles/grid.css');
 @import url('./styles/nav.css');
 @import url('./styles/profile.css');
 @import url('./styles/cards.css');
