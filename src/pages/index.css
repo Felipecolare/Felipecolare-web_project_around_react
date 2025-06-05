@@ -1,18 +1,15 @@
-/* ATENÇÃO: Todos os @import devem vir PRIMEIRO, antes de qualquer regra CSS */
-
-/* Imports dos arquivos CSS (ajustados para os arquivos reais) */
-@import url('./fonts.css');
-
 /* ===== src/index.css ===== */
 /* ATENÇÃO: Todos os @import devem vir PRIMEIRO, antes de qualquer regra CSS */
 
 /* Imports dos arquivos CSS modulares */
-@import url('./styles/fonts.css');
-@import url('./styles/page.css');
-@import url('./styles/grid.css');
-@import url('./styles/nav.css');
-@import url('./styles/profile.css');
-@import url('./styles/cards.css');
-@import url('./styles/popup.css');
-@import url('./styles/footer.css');
-@import url('./styles/responsive.css');
+@import url('./blocks/cards.css');
+@import url('./blocks/footer.css');
+@import url('./blocks/grid.css');
+@import url('./blocks/nav.css');
+@import url('./blocks/page.css');
+@import url('./blocks/popup.css');
+@import url('./blocks/profile.css');
+@import url('./blocks/responsive.css');
+
+/* Import das fontes */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap');
