@@ -1,31 +1,105 @@
 // ===== src/components/Popup/NewCard.jsx =====
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function NewCard({ onAddPlaceSubmit, isLoading }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // Verificar se o formulário é válido
+  useEffect(() => {
+    const nameValid = name.trim().length >= 1;
+    const linkValid = link.trim().length > 0 && isValidUrl(link.trim());
+    const formValid = nameValid && linkValid;
+    
+    setIsFormValid(formValid);
+    
+    console.log('🔍 Validação do formulário:', {
+      name: nameValid ? '✅' : '❌',
+      link: linkValid ? '✅' : '❌',
+      isValid: formValid
+    });
+  }, [name, link]);
+
+  // Função para validar URL
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    const newValue = event.target.value;
+    setName(newValue);
+    console.log('📝 Nome do cartão alterado:', newValue);
   };
 
   const handleLinkChange = (event) => {
-    setLink(event.target.value);
+    const newValue = event.target.value;
+    setLink(newValue);
+    console.log('🔗 Link alterado:', newValue);
+    
+    if (newValue.trim()) {
+      const valid = isValidUrl(newValue.trim());
+      console.log('🔍 URL válida:', valid ? '✅' : '❌');
+    }
   };
 
   function handleSubmit(e) {
     e.preventDefault();
     
-    // Enviar dados para o Main através da prop onAddPlaceSubmit
-    onAddPlaceSubmit({
-      name,
-      link,
-    });
+    const trimmedName = name.trim();
+    const trimmedLink = link.trim();
+    
+    // Validação básica
+    if (!trimmedName) {
+      alert('Por favor, preencha o título do cartão.');
+      return;
+    }
 
-    // Limpar formulário após envio
+    if (!trimmedLink) {
+      alert('Por favor, preencha o link da imagem.');
+      return;
+    }
+
+    // Validação de URL
+    if (!isValidUrl(trimmedLink)) {
+      alert('Por favor, insira uma URL válida para a imagem.\nExemplo: https://exemplo.com/imagem.jpg');
+      return;
+    }
+
+    const cardData = {
+      name: trimmedName,
+      link: trimmedLink,
+    };
+
+    console.log('📤 Enviando dados do cartão:', cardData);
+
+    // Enviar dados para o App através da prop onAddPlaceSubmit
+    onAddPlaceSubmit(cardData);
+
+    // IMPORTANTE: NÃO limpar formulário aqui
+    // O formulário só deve ser limpo quando o popup for fechado com sucesso
+  }
+
+  // Função para limpar formulário (chamada quando popup é fechado com sucesso)
+  const resetForm = () => {
+    console.log('🧹 Limpando formulário do novo cartão');
     setName('');
     setLink('');
-  }
+    setIsFormValid(false);
+  };
+
+  // Log para debug
+  console.log('🔄 NewCard render:', {
+    name,
+    link,
+    isFormValid,
+    isLoading
+  });
 
   return (
     <form
@@ -48,7 +122,9 @@ export default function NewCard({ onAddPlaceSubmit, isLoading }) {
           onChange={handleNameChange}
           disabled={isLoading}
         />
-        <span className="popup__error" id="card-name-error"></span>
+        <span className="popup__error" id="card-name-error">
+          {name.trim().length === 0 && name.length > 0 ? 'Título não pode estar vazio' : ''}
+        </span>
       </label>
       
       <label className="popup__field">
@@ -56,23 +132,34 @@ export default function NewCard({ onAddPlaceSubmit, isLoading }) {
           className="popup__input popup__input_type_url"
           id="card-link"
           name="link"
-          placeholder="Link da imagem"
+          placeholder="Link da imagem (https://...)"
           required
           type="url"
           value={link}
           onChange={handleLinkChange}
           disabled={isLoading}
         />
-        <span className="popup__error" id="card-link-error"></span>
+        <span className="popup__error" id="card-link-error">
+          {link.trim().length > 0 && !isValidUrl(link.trim()) ? 'URL inválida' : ''}
+        </span>
       </label>
 
       <button 
-        className={`button popup__button ${isLoading ? 'popup__button_disabled' : ''}`} 
+        className={`button popup__button ${isLoading || !isFormValid ? 'popup__button_disabled' : ''}`} 
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || !isFormValid}
+        title={!isFormValid ? 'Preencha todos os campos corretamente' : ''}
       >
         {isLoading ? 'Criando...' : 'Criar'}
       </button>
+      
+      {/* Debug info - remover em produção */}
+      {process.env.NODE_ENV === 'development' && (
+        <div style={{fontSize: '12px', color: '#666', marginTop: '10px'}}>
+          Debug: {isFormValid ? '✅ Formulário válido' : '❌ Formulário inválido'} 
+          {isLoading && ' | 🔄 Criando...'}
+        </div>
+      )}
     </form>
   );
 }

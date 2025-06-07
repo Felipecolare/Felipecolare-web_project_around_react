@@ -4,14 +4,32 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 export default function EditAvatar({ isLoading }) {
   const { handleUpdateAvatar } = useContext(CurrentUserContext);
-  const avatarRef = useRef(); // Usar ref para obter acesso direto ao elemento de entrada DOM
+  const avatarRef = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
     
+    const avatarUrl = avatarRef.current.value.trim();
+    
+    // Validação básica
+    if (!avatarUrl) {
+      alert('Por favor, insira o link da imagem.');
+      return;
+    }
+
+    // Validação de URL básica
+    try {
+      new URL(avatarUrl);
+    } catch {
+      alert('Por favor, insira uma URL válida para a imagem.');
+      return;
+    }
+
+    console.log('📝 Enviando novo avatar:', avatarUrl);
+
     // Enviar dados para o contexto usando o valor da entrada obtido com ref
     handleUpdateAvatar({
-      avatar: avatarRef.current.value, // O valor da entrada que obtivemos usando ref
+      avatar: avatarUrl,
     });
   }
 
@@ -30,7 +48,7 @@ export default function EditAvatar({ isLoading }) {
           placeholder="Link da imagem"
           required
           type="url"
-          ref={avatarRef} // Usar ref em vez de value/onChange
+          ref={avatarRef}
           disabled={isLoading}
         />
         <span className="popup__error" id="avatar-link-error"></span>

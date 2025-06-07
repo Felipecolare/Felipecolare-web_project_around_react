@@ -3,32 +3,95 @@ import { useState, useContext, useEffect } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 export default function EditProfile({ isLoading }) {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtém o objeto de usuário atual e função de atualização
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const [name, setName] = useState(''); // Adiciona a variável de estado para o nome (name)
-  const [description, setDescription] = useState(''); // Adicione a variável de estado para a descrição (description)
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [hasChanges, setHasChanges] = useState(false);
 
   // Atualizar campos quando currentUser mudar
   useEffect(() => {
+    console.log('👤 EditProfile - currentUser mudou:', currentUser);
+    
     if (currentUser) {
-      setName(currentUser.name || '');
-      setDescription(currentUser.about || '');
+      const newName = currentUser.name || '';
+      const newDescription = currentUser.about || '';
+      
+      setName(newName);
+      setDescription(newDescription);
+      setHasChanges(false); // Reset changes quando carrega dados
+      
+      console.log('📝 Campos preenchidos:', { name: newName, about: newDescription });
     }
   }, [currentUser]);
 
   const handleNameChange = (event) => {
-    setName(event.target.value); // Atualiza o nome (name) quando a entrada for alterada
+    const newValue = event.target.value;
+    setName(newValue);
+    
+    // Verificar se houve mudanças
+    const hasNameChange = newValue !== (currentUser.name || '');
+    const hasDescriptionChange = description !== (currentUser.about || '');
+    setHasChanges(hasNameChange || hasDescriptionChange);
+    
+    console.log('📝 Nome alterado:', newValue, 'Tem mudanças:', hasNameChange || hasDescriptionChange);
   };
 
   const handleDescriptionChange = (event) => {
-    setDescription(event.target.value); // Atualiza a descrição (description) quando a entrada for alterada
+    const newValue = event.target.value;
+    setDescription(newValue);
+    
+    // Verificar se houve mudanças
+    const hasNameChange = name !== (currentUser.name || '');
+    const hasDescriptionChange = newValue !== (currentUser.about || '');
+    setHasChanges(hasNameChange || hasDescriptionChange);
+    
+    console.log('📝 Descrição alterada:', newValue, 'Tem mudanças:', hasNameChange || hasDescriptionChange);
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Impede o comportamento padrão de envio do formulário
+    event.preventDefault();
 
-    handleUpdateUser({ name, about: description }); // Atualiza as informações do usuário
+    // Validação básica
+    if (!name.trim()) {
+      alert('Por favor, preencha o nome.');
+      return;
+    }
+
+    if (!description.trim()) {
+      alert('Por favor, preencha a descrição.');
+      return;
+    }
+
+    // Verificar se realmente houve mudanças
+    if (!hasChanges) {
+      alert('Nenhuma alteração foi feita.');
+      return;
+    }
+
+    const dataToSend = { 
+      name: name.trim(), 
+      about: description.trim() 
+    };
+
+    console.log('📤 Enviando dados do perfil:', dataToSend);
+    console.log('📊 Dados originais:', { 
+      name: currentUser.name, 
+      about: currentUser.about 
+    });
+
+    // Atualiza as informações do usuário
+    handleUpdateUser(dataToSend);
   };
+
+  // Log para debug
+  console.log('🔄 EditProfile render:', {
+    currentUser: currentUser?.name || 'Não carregado',
+    name,
+    description,
+    hasChanges,
+    isLoading
+  });
 
   return (
     <form
@@ -47,8 +110,8 @@ export default function EditProfile({ isLoading }) {
           placeholder="Nome"
           required
           type="text"
-          value={name} // Vincular nome ao campo de entrada
-          onChange={handleNameChange} // Adicionar manipulador onChange
+          value={name}
+          onChange={handleNameChange}
           disabled={isLoading}
         />
         <span className="popup__error" id="profile-name-error"></span>
@@ -64,20 +127,29 @@ export default function EditProfile({ isLoading }) {
           placeholder="Sobre mim"
           required
           type="text"
-          value={description} // Vincular descrição ao campo de entrada
-          onChange={handleDescriptionChange} // Adicionar manipulador onChange
+          value={description}
+          onChange={handleDescriptionChange}
           disabled={isLoading}
         />
         <span className="popup__error" id="profile-about-error"></span>
       </label>
 
       <button 
-        className={`button popup__button ${isLoading ? 'popup__button_disabled' : ''}`} 
+        className={`button popup__button ${isLoading || !hasChanges ? 'popup__button_disabled' : ''}`} 
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || !hasChanges}
+        title={!hasChanges ? 'Nenhuma alteração foi feita' : ''}
       >
         {isLoading ? 'Salvando...' : 'Salvar'}
       </button>
+      
+      {/* Debug info - remover em produção */}
+      {process.env.NODE_ENV === 'development' && (
+        <div style={{fontSize: '12px', color: '#666', marginTop: '10px'}}>
+          Debug: {hasChanges ? '✅ Há alterações' : '❌ Sem alterações'} 
+          {isLoading && ' | 🔄 Salvando...'}
+        </div>
+      )}
     </form>
   );
 }

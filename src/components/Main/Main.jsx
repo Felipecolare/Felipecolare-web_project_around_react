@@ -1,5 +1,5 @@
 // ===== src/components/Main/Main.jsx =====
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Popup from "../Popup/Popup.jsx";
 import ImagePopup from "../Popup/ImagePopup.jsx";
@@ -22,11 +22,28 @@ export default function Main({
 }) {
   // Obter o usuário atual do contexto
   const { currentUser } = useContext(CurrentUserContext);
+  
+  // Ref para acessar o componente NewCard
+  const newCardRef = useRef();
+
+  // Função modificada para limpar formulário ao fechar popup
+  const handleClosePopup = () => {
+    // Se estivermos fechando o popup de novo cartão, limpar o formulário
+    if (popup?.title === "Novo lugar" && newCardRef.current) {
+      // Limpar campos do formulário
+      const form = document.getElementById('new-card-form');
+      if (form) {
+        form.reset();
+      }
+    }
+    
+    onClosePopup();
+  };
 
   // Objetos de popup
   const newCardPopup = { 
     title: "Novo lugar", 
-    children: <NewCard onAddPlaceSubmit={onAddPlaceSubmit} isLoading={isLoading} /> 
+    children: <NewCard ref={newCardRef} onAddPlaceSubmit={onAddPlaceSubmit} isLoading={isLoading} /> 
   };
   const editProfilePopup = { 
     title: "Editar perfil", 
@@ -82,7 +99,7 @@ export default function Main({
 
       {/* Renderização condicional do popup */}
       {popup && (
-        <Popup onClose={onClosePopup} title={popup.title}>
+        <Popup onClose={handleClosePopup} title={popup.title}>
           {popup.children}
         </Popup>
       )}
